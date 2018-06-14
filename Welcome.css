@@ -1,0 +1,149 @@
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background-color: #ff9966
+		
+	}
+	
+	li {
+		float: left;
+	}
+	
+	li a {
+		display: block;
+		color: white;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+	}
+	
+	li a:hover {
+		background-color: #111;
+	}
+
+	ul span {
+		float: right;
+		display: block;
+		color: white;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+	}
+	
+	
+	body { 
+		background-image: url('https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/delhi-skyline-in-watercolor-pablo-romero.jpg');
+		background-repeat: no-repeat;
+		background-position: center; 
+		background-size:cover;
+		font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+		height: 100%;
+		width: 100%;	
+	}
+	
+	.signin{
+		margin-top: 10%;
+		font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+		color: white;
+		text-align: center;
+	}
+	
+	.register{
+		margin-left: 5%;
+		font-weight: bold;
+	}
+	
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #ff9966;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 250px;
+    text-align: left;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 40%;
+  position: center;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+    position: none;
+	border-radius: 20px;
+    background-color: rgba(255,0,0,0.3);
+	background-size: 50% auto;
+}
+
+.text {
+  color: black;
+  padding: 8px 12px;
+  position: center;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  width: auto;
+  margin-left: 25%;
+  margin-right: 25%;
+  color: white;
+  font-weight: bold;
+  font-size: 28px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  color: red;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev{
+	left: 0;
+	border-radius: 3px 0 0 3px;
+}
+
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(255,0,0,0.3);
+  width: 50px;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+
+
+.mySlides img{
+max-height: 30%;
+max-width: 30%;
+padding-top: 5%;
+	margin-left: 35%;
+}
+	
+	
