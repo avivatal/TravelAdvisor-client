@@ -1,22 +1,23 @@
-angular.module('citiesApp',['ngMaterial'])
-    .service('setHeadersToken', ['$http', function($http){
-        let token = "";
-        this.set = function(t){
-            token = t;
-            $http.defaults.headers.common['x-access-token'] = t;
-        }
-    }])
-    .controller('WelcomeController',['$http', 'setHeadersToken', function ($http, setHeadersToken,$mdDialog) {
+angular.module('citiesApp',['LocalStorageModule'])
+.service('setHeadersToken', ['$http', function($http){
+    let token = "";
+    this.set = function(t){
+        token = t;
+        $http.defaults.headers.common['x-access-token'] = token;
+    }
+}])
+    .controller('WelcomeController',['$http','$scope', 'localStorageService', 'setHeadersToken', function ($http,$scope,localStorageService, setHeadersToken) {
 
 
         self = this;
 
-        self.userName= "";
+        self.userName= "guest";
 
         self.random1;
         self.random2;
         self.random3;
 
+        self.isRecoverMode = true;
         let serverUrl = 'http://localhost:3000/'
 
         self.signin = function(){
@@ -25,7 +26,8 @@ angular.module('citiesApp',['ngMaterial'])
             if(username.length>0 && password.length>0){
                 $http.post(serverUrl + "Users/login", self.user)
                 .then(function(response){
-                    setHeadersToken.set(response.data.token);
+                    localStorageService.set("token", response.data.token)
+                    setHeadersToken.set(response.data.token)
                     self.userName = username;
                 }, function(response){
                     self.login.content = "Something went wrong"
@@ -33,6 +35,9 @@ angular.module('citiesApp',['ngMaterial'])
             }
         }
 
+        self.showRecover = function(){
+            self.isRecoverMode = !self.isRecoverMode;
+        }
         self.recoverPassword = function(){
          /*   var confirm = $mdDialog.alert({});
             .title("Password Recovery")
@@ -41,20 +46,25 @@ angular.module('citiesApp',['ngMaterial'])
             }, function(result){
                 
             });*/
-            
+
+            $http.post(serverUrl+'Users/passwordRecovery',self.recover)
+            .then(function(response){
+                alert('Your password is '+ response.data)
+            },function(response){
+                alert('Invalid parameters')
+            })
         }
 
         self.getRandomSites = function(){
 
             $http({
-                url: serverUrl + "Points/newExplore", 
+                url: serverUrl + "Points/newExplore/1", 
                 method: "GET",
-                params:{minRate:3}
              })
             .then(function(response){
-                random1 = response.data[0];
-                random2 = response.data[1];
-                random3 = response.data[2];
+                self.random1 = response.data[0];
+                self.random2 = response.data[1];
+                self.random3 = response.data[2];
                 console.log('success')
             }, function(response){})
         }

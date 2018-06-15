@@ -1,0 +1,161 @@
+
+<html ng-app="citiesApp">
+    <head><title>TravelAdvisor</title>
+        <link rel="stylesheet" type="text/css" href="Welcome.css" />
+</head>
+    <body ng-controller="WelcomeController as wlcmCtrl"  ng-init="wlcmCtrl.username='guest'" >
+
+            <ul class="navbar">
+              <li><a class="active" href="#/">Home</a></li>
+              <li><a href="./About.html">About</a></li>
+              <li><a href="./POI.html">Points of Interest</a></li>
+
+              <li><a href="./Main.html">About</a></li>
+              <span ng-model="wlcmCtrl.userName">Hello, {{wlcmCtrl.userName}}!</span>
+            </ul>
+            
+        <br>
+        <br>
+        <div  ng-view></div>
+
+
+
+
+    </div>
+
+    <div class="signin">
+        <h1>Sign In</h1>
+        <form ng-submit="wlcmCtrl.signin()">  
+                Username:
+                <input type="text" ng-model="wlcmCtrl.user.userName"><br><br>
+                Password:
+                <input type="text" ng-model="wlcmCtrl.user.password"><br><br>
+                <input type="submit" value="Submit">
+        </form>
+        <br>
+        <a style="margin-right:30px;" href="register.html">Register</a>
+        <a href="#" ng-click="wlcmCtrl.showRecover()">Forgot my Password</a>
+
+        <div ng-hide="wlcmCtrl.isRecoverMode">
+          <form  ng-submit="wlcmCtrl.recoverPassword()">  
+            <label >Username:</label> 
+            <input type="text" ng-model="wlcmCtrl.recover.userName"><br><br>
+            <label>What is your mothers maiden name?</label>
+            <input type="text" ng-model="wlcmCtrl.recover.passwordRecoveryAnswer"><br><br>
+            <input type="submit" value="Submit">
+           </form>
+        </div>
+    </div>
+
+    <footer>
+	<br>
+	<br>
+	<br>
+	<br>
+
+        <h1 style="margin-left: 10%;">Explore Delhi</h1>
+<!-- Slideshow container -->
+<div class="slideshow-container">
+
+  <!-- Full-width images with number and caption text -->
+  <div class="mySlides fade">
+    <div class="numbertext"></div>
+    <h2 ng-model="wlcmCtrl.random1.pointName" style="text-align:center">{{wlcmCtrl.random1.pointName}}</h2>
+    <img ng-model="wlcmCtrl.random1.picture" src={{wlcmCtrl.random1.picture}} alt="" style="width:50%">
+    <div ng-model="wlcmCtrl.random1.category" class="text">Category: {{wlcmCtrl.random1.category}}</div>
+    <div ng-model="wlcmCtrl.random1.rate" class="text">Rating: {{wlcmCtrl.random1.rate}}/5</div>
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext"></div>
+    <h2 ng-model="wlcmCtrl.random2.pointName" style="text-align:center">{{wlcmCtrl.random2.pointName}}</h2>
+    <img ng-model="wlcmCtrl.random2.picture" src={{wlcmCtrl.random2.picture}} alt="" style="width:50%">
+    <div ng-model="wlcmCtrl.random2.category" class="text">Category: {{wlcmCtrl.random2.category}}</div>
+    <div ng-model="wlcmCtrl.random2.rate" class="text">Rating: {{wlcmCtrl.random2.rate}}/5</div>
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext"></div>
+    <h2 ng-model="wlcmCtrl.random3.pointName" style="text-align:center">{{wlcmCtrl.random3.pointName}}</h2>
+    <img ng-model="wlcmCtrl.random3.picture" src={{wlcmCtrl.random3.picture}} alt="" style="width:50%">
+    <div ng-model="wlcmCtrl.random3.category" class="text">Category: {{wlcmCtrl.random3.category}}</div>
+    <div ng-model="wlcmCtrl.random3.rate" class="text">Rating: {{wlcmCtrl.random3.rate}}/5</div>
+</div>
+<!-- Next and previous buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+<br>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span> 
+  <span class="dot" onclick="currentSlide()"></span> 
+</div>
+<br/>
+        <div>
+            <image ng-src="{{wlcmCtrl.random1.Picture}}"></image>
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+    <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"> </script>
+    <script src="node_modules/angular-font-awesome/dist/angular-font-awesome.es5.js"></script>
+    <script src="app.js" ></script>
+    <script src="WelcomeController.js" ></script>
+	<script>
+	var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1} 
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none"; 
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block"; 
+  dots[slideIndex-1].className += " active";
+}
+/*
+
+// When the user scrolls the page, execute myFunction 
+window.onscroll = function() {myFunction()};
+
+function myFunction() {
+  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";
+} */</script>
+        
+ 
+    </body>
+    </html>
+    
+    
+
+    

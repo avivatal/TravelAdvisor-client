@@ -7,6 +7,7 @@ app.config(['$locationProvider', '$routeProvider', function($locationProvider, $
 
 
     $routeProvider.when('/', {
+        templateUrl: './index.html',
         template: '<h1>Welcome to TravelAdvisor</h1>'
     })
         .when('/about', {

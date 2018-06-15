@@ -1,5 +1,5 @@
 angular.module('citiesApp')
-    .controller('RegisterController',['$http', function ($http) {
+    .controller('RegisterController',['$http','$location', function ($http,$location) {
 
 
         self = this;
@@ -59,17 +59,22 @@ angular.module('citiesApp')
             if(! re.test(String(email).toLowerCase())){
                 error += 'email is not in the right syntax '
             }
-            if(category1 === category2){
+           /* if(category1 === category2){
                 error += 'Please choose different categories';
-            }
+            }*/
             if(error === ''){
                $http.post(serverUrl + "Users/register", self.user)
                .then(function(response){
-                   self.register.content = "Registered Successfuly";
+                   alert("Registered Successfuly");
                }, function(response){
-                   self.register.content = "Something went wrong";
+                   alert("Something went wrong");
                });
             }
+            else {
+                alert(error)
+            }
+            $location.path('/')
+
         }
 
     }]);
