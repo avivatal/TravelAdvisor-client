@@ -10,6 +10,7 @@
               <li><a class="active" href="./index.html">Home</a></li>
               <li><a href="./About.html">About</a></li>
               <li><a href="./POI.html">Points of Interest</a></li>
+              <li><a href="./Main.html">Main</a></li>
 
               <!-- <span ng-model="rgCtrl.userName">Hello, {{rgCtrl.userName}}!</span> -->
             </ul>
@@ -25,25 +26,19 @@
     <div class="slideshow-container">
     
       <!-- Full-width images with number and caption text -->
-      <div class="mySlides fade">
-        <div class="numbertext"></div>
+      <div class="mySavedSlides fade">
         <h2 ng-model="mnCtrl.saved1.pointName" style="text-align:center">{{mnCtrl.saved1.pointName}}</h2>
-        <img ng-model="mnCtrl.saved1.picture" src={{mnCtrl.saved1.picture}} alt="" style="width:50%">
-        <div ng-model="mnCtrl.saved1.category" class="text">Category: {{mnCtrl.saved1.category}}</div>
-        <div ng-model="mnCtrl.saved1.rate" class="text">Rating: {{mnCtrl.saved1.rate}}/5</div>
+        <img ng-model="mnCtrl.saved1.picture"  src={{mnCtrl.saved1.picture}} alt="" style="width:50%">
       </div>
     
-      <div class="mySlides fade">
-        <div class="numbertext"></div>
+      <div class="mySavedSlides fade">
         <h2 ng-model="mnCtrl.saved2.pointName" style="text-align:center">{{mnCtrl.saved2.pointName}}</h2>
-        <img ng-model="mnCtrl.saved2.picture" src={{mnCtrl.saved2.picture}} alt="" style="width:50%">
-        <div ng-model="mnCtrl.saved2.category" class="text">Category: {{mnCtrl.saved2.category}}</div>
-        <div ng-model="mnCtrl.saved2.rate" class="text">Rating: {{mnCtrl.saved2.rate}}/5</div>
+        <img ng-model="mnCtrl.saved2.picture"  src={{mnCtrl.saved2.picture}} alt="" style="width:50%">
       </div>
 
     <!-- Next and previous buttons -->
-      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      <a class="prev" onclick="plusSavedSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSavedSlides(1)">&#10095;</a>
     </div>
     <br>
 
@@ -53,7 +48,6 @@
     
       <!-- Full-width images with number and caption text -->
       <div class="mySlides fade">
-        <div class="numbertext"></div>
         <h2 ng-model="mnCtrl.rec1.pointName" style="text-align:center">{{mnCtrl.rec1.pointName}}</h2>
         <img ng-model="mnCtrl.rec1.picture" src={{mnCtrl.rec1.picture}} alt="" style="width:50%">
         <div ng-model="mnCtrl.rec1.category" class="text">Category: {{mnCtrl.rec1.category}}</div>
@@ -61,7 +55,6 @@
       </div>
     
       <div class="mySlides fade">
-        <div class="numbertext"></div>
         <h2 ng-model="mnCtrl.rec2.pointName" style="text-align:center">{{mnCtrl.rec2.pointName}}</h2>
         <img ng-model="mnCtrl.rec2.picture" src={{mnCtrl.rec2.picture}} alt="" style="width:50%">
         <div ng-model="mnCtrl.rec2.category" class="text">Category: {{mnCtrl.rec2.category}}</div>
@@ -78,9 +71,63 @@
         
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
         <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>       
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script> 
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>      
         <script src="app.js" ></script>
         <script src="MainController.js" ></script>
+        <script>
+          var slideIndex = 1;
+          var slideSaved = 1;
+        $(document).ready(function(){
+          showSavedSlides(slideSaved);
+          
+          showSlides(slideIndex);
+        });
+          
+        
+        // Next/previous controls
+        function plusSlides(n) {
+          showSlides(slideIndex += n);
+        }
+
+        function plusSavedSlides(n) {
+          showSavedSlides(slideSaved += n);
+        }
+        
+        // Thumbnail image controls
+        function currentSlide(n) {
+          showSlides(slideIndex = n);
+        }
+
+        // Thumbnail image controls
+        function currentSavedSlide(n) {
+          showSavedSlides(slideSaved = n);
+        }
+        
+        function showSlides(n) {
+          var i;
+          var slides = document.getElementsByClassName("mySlides");
+          if (n > slides.length) {slideIndex = 1} 
+          if (n < 1) {slideIndex = slides.length}
+          for (i = 0; i < slides.length; i++) {
+              slides[i].style.display = "none"; 
+          }
+          slides[slideIndex-1].style.display = "block"; 
+        }
+
+        function showSavedSlides(n) {
+          var i;
+          var slides = document.getElementsByClassName("mySavedSlides");
+          if (n > slides.length) {slideSaved = 1} 
+          if (n < 1) {slideSaved = slides.length}
+          for (i = 0; i < slides.length; i++) {
+              slides[i].style.display = "none"; 
+          }
+          slides[slideSaved-1].style.display = "block"; 
+          
+        }
+        
+        </script>
        
     </body>
     </html>

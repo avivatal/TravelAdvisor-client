@@ -33,6 +33,7 @@ app.use('/reg', function (req, res, next) {
     // check header or url parameters or post parameters for token
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
+  //  console.log(token)
     // decode token
     if (token) {
 
@@ -45,8 +46,8 @@ app.use('/reg', function (req, res, next) {
                 // get the decoded payload and header
                 var decoded = jwt.decode(token, {complete: true});
                 req.decoded= decoded;
-                console.log(decoded.header);
-                console.log(decoded.payload)
+                //console.log(decoded.header);
+                //console.log(decoded.payload)
                 next();
             }
         });

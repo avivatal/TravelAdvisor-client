@@ -3,8 +3,11 @@ angular.module('citiesApp',['LocalStorageModule'])
     let token = "";
     this.set = function(t){
         token = t;
-        $http.defaults.headers.common['x-access-token'] = token;
-    }
+        $http.defaults.headers.common['x-access-token'] = t;
+        
+            // $httpProvider.defaults.headers.post[ 'x-access-token' ] = token
+
+        console.log("set")    }
 }])
     .controller('WelcomeController',['$http','$scope', 'localStorageService', 'setHeadersToken', function ($http,$scope,localStorageService, setHeadersToken) {
 

@@ -1,17 +1,30 @@
 angular.module('citiesApp',['LocalStorageModule'])
-    
-    .controller('POIController',['$http','$scope', 'localStorageService', function ($http,$scope, localStorageService) {
+.service('setHeadersToken', ['$http', function($http){
+    let token = "";
+    this.set = function(t){
+        token = t;
+        $http.defaults.headers.common['x-access-token'] = t;
+        console.log("set")    }
+}])
+    .controller('POIController',['$http','$scope', 'localStorageService','setHeadersToken', function ($http,$scope, localStorageService,setHeadersToken) {
 
 
         self = this;
 
-        self.userName= "guest";
+     //   self.userName= "guest";
 
         self.categories = [];
         self.points = [];
         self.favorites = [];
         self.selectedCategory = '';
         self.displayAll = true;
+        self.sortOptions = ["Rate high to Low","Rate low to high"];
+        self.rateSort = '';
+        self.point = {}
+        self.point.pointName = "";
+
+        setHeadersToken.set(localStorageService.get("token"))
+        self.userName = "aviva"
 
         let serverUrl = 'http://localhost:3000/'
 
@@ -30,6 +43,15 @@ angular.module('citiesApp',['LocalStorageModule'])
         }
         self.getCategories();
 
+        self.getSort = function(point){
+            if(self.rateSort === "Rate high to Low"){
+                return '-rate';
+            } else if(self.rateSort === "Rate low to high"){
+                return 'rate';
+            } else {
+                return ''
+            }
+        }
         self.selectCategory = function(){
             self.displayAll = false;
         }
@@ -58,7 +80,7 @@ angular.module('citiesApp',['LocalStorageModule'])
         self.getPointOfInterest();
 
         self.getFavorites = function(){
-            $http.get(serverUrl + "Points/showFavoritePoints/")
+            $http.get(serverUrl + "reg/Favorites/showFavoritePoints/")
                 .then(function(response){
                    self.favorites = response.data;
                 }, function(response){
@@ -70,7 +92,7 @@ angular.module('citiesApp',['LocalStorageModule'])
 
         self.isFavorite = function(row){
             for(fav in self.favorites){
-                if(fav.pointName === row.pointName){
+                if(self.favorites[fav].pointName === row.pointName){
                     return "fa fa-star";
                 }
             }
@@ -78,31 +100,31 @@ angular.module('citiesApp',['LocalStorageModule'])
         }
 
         self.addOrRemoveFavorites = function(point){
-            var counter = 0;
+            setHeadersToken.set(localStorageService.get("token"))
             var toAdd = true;
-            for(fav in self.favorites){
-                counter++;
-                if(fav.pointName === point.pointName){
+            for(var i=0; i<self.favorites.length;i++){
+                if(self.favorites[i].pointName === point.pointName){
                     //remove from favorites
                     toAdd = false;
-                    var pointToDel = {"pointName":point.pointName}
-                    $http.delete(serverUrl + "Points/removePointFromFavorite/", pointToDel)
+                    self.point.pointName = "Gurudwara Bangla Sahib"
+                    $http.delete(serverUrl + "reg/Favorites/removePointFromFavorite",  self.point)
                         .then(function(response){
                             self.favorites = response.data;
                         }, function(response){
                         alert("Something went wrong")
                     });
-                    self.getFavorites();
+                 //   self.getFavorites();
                 }
             }
             if(toAdd===true){
-                var pointToAdd = {"pointName":point.pointName}
-                $http.post(serverUrl + "Points/saveFavoriteInServer/", pointToAdd)
+                var point = {'pointInterest': [point.pointName] };
+                $http.post(serverUrl + "reg/Favorites/saveFavoriteInServer", point)
                         .then(function(response){
-                            self.favorites = response.data;
+                           // self.favorites = response.data;
                         }, function(response){
                         alert("Something went wrong")
                     });
+               //
                     self.getFavorites();
             }
             

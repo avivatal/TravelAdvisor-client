@@ -2,9 +2,16 @@
     <head><title>TravelAdvisor</title>
 <link rel="stylesheet" type="text/css" href="Welcome.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
     <body ng-controller="POIController as pCtrl">
-     
+                
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+            <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>       
+            <script src="app.js" ></script>
+        <script src="POIController.js" ></script>
+
         
 
             <ul>
@@ -24,35 +31,32 @@
             
             {{category}}<br></label><br>
             <label><input type="button" value="Show all categories" ng-click="pCtrl.resetFilter()"></input></label>
-            
+            <label>Sort by rate</label>
+            <label><select ng-model="pCtrl.rateSort" ng-options="option for option in pCtrl.sortOptions">
+            </select></label>
             <table>
                 <tr>
                     <td>Point of Interest</td>
                     <td>Description</td>
                     <td>Category</td>
-                    <td>Rating</td>
-                    <td>Add to Favorites</td>
+                    <td>Rating <i class="fa fa-sort-down" ></i></td>
+                    <td ng-if="pCtrl.userName !== 'guest'">Add to Favorites</td>
                 </tr> 
-                <tr ng-repeat="point in pCtrl.points | orderBy: 'category' | filter: pCtrl.filter">
+                <tr ng-repeat="point in pCtrl.points | orderBy:pCtrl.getSort() | filter: pCtrl.filter">
                     <td>{{point.pointName}}</td>
                     <td>
                         <img src={{point.picture}} alt="" style="width:30%">
                         </td>
                     <td>{{point.category}}</td>
                     <td>{{point.rate}}/5</td>
-                    <td><i class={{pCtrl.isFavorite()}} ng-click ="pCtrl.addOrRemoveFavorites(point)"></i></td>
+                    <td ng-if="pCtrl.userName !== 'guest'"><i style="cursor: pointer" class={{pCtrl.isFavorite(point)}} ng-click ="pCtrl.addOrRemoveFavorites(point)"></i></td>
                 </tr>
             </table>
     </div>
 
     <!-- ng-init="pCtrl.getPointOfInterest(category)" -->
 
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-        <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>       
-        <script src="app.js" ></script>
-        <script src="POIController.js" ></script>
+
        
     </body>
     </html>

@@ -34,6 +34,8 @@ router.post('/register', function (req, res) {
         DButilsAzure.execQuery("insert into CategoryUsers values ('"+username+"', '"+categories[i]+"')").then(function(result)
     {
         res.send(true)
+    }).catch(function(result){
+        console.log("error")
     })
     }
     //return boolean feedback to user

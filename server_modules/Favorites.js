@@ -66,6 +66,7 @@ router.post('/saveFavoriteInServer', function (req, res) {
     let maxNumberTime = 1;
     let maxOrderNum = 1;
 
+    // console.log("*********************"+ req.body.pointsInterest[0])
 
     DButilsAzure.execQuery("Select Max(numberTime) AS mnt from UserFavorites Where userName='" + userName + "'").then(function (result1) {
         if (result1.length > 0) {
@@ -89,14 +90,16 @@ router.post('/saveFavoriteInServer', function (req, res) {
                         });
                         maxNumberTime++;
                         maxOrderNum++;
-                    }
+                    } 
 
                     
                 });
               
-                res.sendStatus(200);
-
             }
+            res.send(points.length);
+
+            res.sendStatus(200);
+
         }).catch(function (err) { res.status(400).send(err); });
 
     }).catch(function (err) { res.status(400).send(err); });
@@ -126,9 +129,9 @@ router.get('/costumPopularPoints', function (req, res) {
 
 //lastSaved request--works
 router.get('/lastSavedPoints', function (req, res) {
-    var token = req.params.token || req.query.token || req.headers['x-access-token'];
+    var token =req.headers['x-access-token'];
     var decoded = jwt.decode(token, { complete: true });
-    req.decoded = decoded;
+   // req.decoded = decoded;
     var userName = decoded.payload.userName;
     var ans = [];
     DButilsAzure.execQuery("SELECT p.pointName, p.picture, p.description ,p.viewCount,p.lastReviewOne,p.lastReviewTwo FROM (SELECT TOP 2 * FROM UserFavorites Where userName='" + userName + "' order by orderNumber DESC) a JOIN PointsOfInterest p ON a.pointOfInterest=p.pointName").then(function (result) {

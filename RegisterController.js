@@ -4,20 +4,20 @@ angular.module('citiesApp')
 
         self = this;
         
-        let categories = ['0', '0'];    
+        self.categories = [];    
+
 
         let serverUrl = 'http://localhost:3000/'
+        self.category1 ="";
+        self.category2 ="";
         
+        let countries = [];
         self.getCategories = function(){
             $http.get(serverUrl + "Points/categories")
                 .then(function(response){
                     if(response.data.length > 0){
-                        var category1 = document.getElementById('category1');
-                        var category2 = document.getElementById('category2');
                         for(option in response.data){
-                            category1.options[category1.options.length] = new Option(response.data[option].categoryName, response.data[option].categoryName)
-                            category2.options[category2.options.length] = new Option(response.data[option].categoryName, response.data[option].categoryName)
-                            categories[categories.length] = response.data[option].categoryName;
+                            self.categories[self.categories.length] = response.data[option].categoryName;
                         }
                     }
                 }, function(response){
@@ -27,21 +27,36 @@ angular.module('citiesApp')
         self.getCategories();
 
         self.getCountries = function(){
-            /* var req = new XMLHttpRequest();
-             req.open("GET", "http://localhost:3000/countries.xml", true);
-             req.send();*/
+             var req = new XMLHttpRequest();
+             req.onreadystatechange = function(){
+                 var result =[]
+                 if(this.readyState == 4 && this.status == 200){
+                     var xml = this.responseXML;
+                     var xmlcountries = xml.getElementsByTagName("Country");
+                     for(var i=0; i<xmlcountries.length; i++ ){
+                         var country = {
+                             "id": xmlcountries[i].getElementsByTagName("ID")[0].childNodes[0].nodeValue.toString(),
+                             "Name": xmlcountries[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue.toString()
+                         }
+
+                         result.push(country);
+                     }
+                     self.countries = result;
+                 }
+             }
+            
+             req.open("GET", "./countries.xml", true);
+             req.send();
         }
 
-      //  self.getCountries();
+        self.getCountries();
         
 
         self.register = function(){
             var username = self.user.userName;
             var password = self.user.password;
             var email = self.user.email;
-            var category1 = self.category1;
-            var category2 = self.category2;
-            self.user.categories = ["park", "museum"];
+            self.user.categories = [self.category1, self.category2];
             var error = '';
             if(username.length < 3 || username.length > 8){
                 error = 'Username must be between 3 and 8 characters ';

@@ -34,13 +34,13 @@
                     <label>City:</label>
                     <input type="text" ng-model="rgCtrl.user.city"><br><br>
                     <label>Country:</label>
-                    <input type="text" ng-model="rgCtrl.user.country"><br><br>
+                    <select id="countries" ng-model="rgCtrl.user.country" ng-options="country.Name as country.Name for country in rgCtrl.countries"></select><br><br>
                     <label>Email:</label>
                     <input type="text" ng-model="rgCtrl.user.email"><br><br>
                     <label>Category of Interest #1:</label>
-                    <select id="category1" ng-model="category1"></select><br><br>
+                    <select id="category1" ng-model="rgCtrl.category1" ng-options="category as category for category in rgCtrl.categories"></select><br><br>
                     <label>Category of Interest #2:</label>
-                    <select id="category2" ng-model="category2"></select><br><br>
+                    <select id="category2" ng-model="rgCtrl.category2" ng-options="category as category for category in rgCtrl.categories"></select><br><br>
 					<label>What is your mothers maiden name?</label>
                     <input type="text" ng-model="rgCtrl.user.passwordRecoveryAnswer"><br><br>
                     <input style="margin-left:10%" type="submit" value="Submit">
