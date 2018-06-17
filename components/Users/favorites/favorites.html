@@ -1,0 +1,54 @@
+<html ng-app="citiesApp">
+    <head><title>TravelAdvisor</title>
+<link rel="stylesheet" type="text/css" href="../../Welcome.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+    <body>
+
+            <div ng-if="fvCtrl.hasFavorites"> 
+
+            <h1>My Favorites</h1>
+            <label>Filter by Category:  </label>
+            <label ng-repeat="category in fvCtrl.categories">
+            <input type="radio" checklist-value="category" value="{{category}}" name="{{category}}" ng-model="fvCtrl.selectedCategory" ng-change="fvCtrl.selectCategory()"> 
+            
+            {{category}}<br></label><br>
+            <label><input type="button" value="Show all categories" ng-click="fvCtrl.resetFilter()"></input></label>
+            <label>Sort by rate</label>
+            <label><select ng-model="fvCtrl.rateSort" ng-options="option for option in fvCtrl.sortOptions">
+            </select></label>
+            <table>
+                <tr>
+                    <td>Point of Interest</td>
+                    <td>Description</td>
+                    <td>Category</td>
+                    <td>Rating <i class="fa fa-sort-down" ></i></td>
+                    <td>Remove</td>
+                </tr> 
+                <tr ng-repeat="point in fvCtrl.points | orderBy:fvCtrl.getSort() | filter: fvCtrl.filter">
+                    <td>{{point.pointName}}</td>
+                    <td>
+                         <img src={{point.picture}} alt="" style="width:30%"> 
+                        </td>
+                    <td>{{point.category}}</td>
+                    <td>{{point.rate}}/5</td>
+                    <td><i style="cursor: pointer" class="fa fa-close" ng-click ="fvCtrl.RemoveFavorites(point)"></i></td>
+                </tr>
+            </table>
+        </div> 
+        <div ng-if="!fvCtrl.hasFavorites">
+                <h1>You dont have any favorites yet :(</h1>
+            </div>
+    </div>
+
+    <!-- ng-init="fvCtrl.getPointOfInterest(category)" -->
+
+
+       
+    </body>
+    </html>
+    
+    
+
+    

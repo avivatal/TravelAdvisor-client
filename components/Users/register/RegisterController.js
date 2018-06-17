@@ -45,7 +45,7 @@ angular.module('citiesApp')
                  }
              }
             
-             req.open("GET", "./countries.xml", true);
+             req.open("GET", "../../resources/countries.xml", true);
              req.send();
         }
 
@@ -74,9 +74,9 @@ angular.module('citiesApp')
             if(! re.test(String(email).toLowerCase())){
                 error += 'email is not in the right syntax '
             }
-           /* if(category1 === category2){
+            if(category1 === category2){
                 error += 'Please choose different categories';
-            }*/
+            }
             if(error === ''){
                $http.post(serverUrl + "Users/register", self.user)
                .then(function(response){

@@ -1,15 +1,16 @@
-angular.module('citiesApp',['LocalStorageModule'])
-.service('setHeadersToken', ['$http', function($http){
+angular.module('citiesApp')
+    .service('setHeadersToken', ['$http', function($http){
     let token = "";
+    this.userName = "guest"
     this.set = function(t){
         token = t;
         $http.defaults.headers.common['x-access-token'] = t;
-        
-            // $httpProvider.defaults.headers.post[ 'x-access-token' ] = token
-
         console.log("set")    }
+    this.setName = function(name){
+        this.userName = name;
+    }
 }])
-    .controller('WelcomeController',['$http','$scope', 'localStorageService', 'setHeadersToken', function ($http,$scope,localStorageService, setHeadersToken) {
+    .controller('WelcomeController',['$http','$scope', 'localStorageService', 'setHeadersToken','$location', function ($http,$scope,localStorageService, setHeadersToken,$location) {
 
 
         self = this;
@@ -20,7 +21,7 @@ angular.module('citiesApp',['LocalStorageModule'])
         self.random2;
         self.random3;
 
-        self.isRecoverMode = true;
+//self.isRecoverMode = true;
         let serverUrl = 'http://localhost:3000/'
 
         self.signin = function(){
@@ -30,8 +31,10 @@ angular.module('citiesApp',['LocalStorageModule'])
                 $http.post(serverUrl + "Users/login", self.user)
                 .then(function(response){
                     localStorageService.set("token", response.data.token)
-                    setHeadersToken.set(response.data.token)
-                    self.userName = username;
+                    setHeadersToken.set(response.data.token);
+                    $scope.inCtrl.isLogin = true;
+                    setHeadersToken.setName(username);
+                    $location.path('/Main');
                 }, function(response){
                     self.login.content = "Something went wrong"
                 });
@@ -39,16 +42,11 @@ angular.module('citiesApp',['LocalStorageModule'])
         }
 
         self.showRecover = function(){
-            self.isRecoverMode = !self.isRecoverMode;
+            $scope.inCtrl.isRecoverMode = !$scope.inCtrl.isRecoverMode;
+     //       self.isRecoverMode = !self.isRecoverMode;
+     //       alert(self.isRecoverMode)
         }
         self.recoverPassword = function(){
-         /*   var confirm = $mdDialog.alert({});
-            .title("Password Recovery")
-            .textContent("What is your mothers maiden name?");
-            $mdDialog.show(confirm).then(function(result){
-            }, function(result){
-                
-            });*/
 
             $http.post(serverUrl+'Users/passwordRecovery',self.recover)
             .then(function(response){

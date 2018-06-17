@@ -4,28 +4,30 @@ app.config(['$locationProvider', '$routeProvider', function($locationProvider, $
 
 
     $locationProvider.hashPrefix('');
-
-
-    $routeProvider.when('/', {
-        // templateUrl: './index.html',
-        template: '<h1>Welcome to TravelAdvisor</h1>',
-        controller: 'WelcomeController as wlcmCtrl'
-    })
+    $routeProvider
+        .when('/', {
+            templateUrl: 'components/Users/login/welcome.html',
+            controller : 'WelcomeController as wlcmCtrl'
+        })
         .when('/About', {
-            templateUrl: 'components/About/about.html',
+            templateUrl: '/components/About/about.html',
             controller : 'aboutController as abtCtrl'
         })
         .when('/POI', {
-            templateUrl: 'components/POI/POI.html',
+            templateUrl: '/components/POI/POI.html',
             controller : 'POIController as pCtrl'
         })
         .when('/register', {
-            templateUrl: 'components/Users/register/Register.html',
+            templateUrl: '/components/Users/register/Register.html',
             controller : 'RegisterController as rgCtrl'
         })
-        .when('/home', {
-            templateUrl: 'components/Users/home/Main.html',
+        .when('/Main', {
+            templateUrl: '/components/Users/home/Main.html',
             controller : 'MainController as mnCtrl'
+        })
+        .when('/favorites', {
+            templateUrl: 'components/Users/favorites/favorites.html',
+            controller : 'FavoritesController as fvCtrl'
         })
         .otherwise({ redirectTo: '/' });
 

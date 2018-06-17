@@ -5,25 +5,9 @@
 
 </head>
     <body>
-                
-            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-            <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>       
-            <script src="app.js" ></script>
-        <script src="POIController.js" ></script>
 
-        
+        <label style="float:right;"> My Favorites <i style="cursor:pointer" ng-click="pCtrl.routeToFav()" class="fa fa-star"></i></label>
 
-            <ul>
-              <li><a class="active" href="#index.html">Home</a></li>
-              <li><a href="#About.html">About</a></li>
-              <li><a href="#POI.html">Points of Interest</a></li>
-
-              <!-- <span ng-model="rgCtrl.userName">Hello, {{rgCtrl.userName}}!</span> -->
-            </ul>
-        <br>
-        <br>
-        <div  ng-view></div>
             <h1>Delhi's Points of Interest</h1>
             <label>Filter by Category:  </label>
             <label ng-repeat="category in pCtrl.categories">
