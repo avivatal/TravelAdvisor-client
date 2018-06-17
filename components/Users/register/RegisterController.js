@@ -53,6 +53,7 @@ angular.module('citiesApp')
         
 
         self.register = function(){
+            if(self.user){
             var username = self.user.userName;
             var password = self.user.password;
             var email = self.user.email;
@@ -81,6 +82,7 @@ angular.module('citiesApp')
                $http.post(serverUrl + "Users/register", self.user)
                .then(function(response){
                    alert("Registered Successfuly");
+                   $location.path('/')
                }, function(response){
                    alert("Something went wrong");
                });
@@ -88,8 +90,11 @@ angular.module('citiesApp')
             else {
                 alert(error)
             }
-            $location.path('/')
+            
 
+        } else {
+            alert("Please submit all parameters")
         }
+    } 
 
     }]);

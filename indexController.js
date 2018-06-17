@@ -3,7 +3,7 @@ angular.module('citiesApp')
 
 
         self = this;
-        self.userName= setHeadersToken.userName;
+        self.userName= "Guest";
 
         self.isRecoverMode = true;
         self.isLogin = false;

@@ -66,8 +66,6 @@ router.post('/saveFavoriteInServer', function (req, res) {
     let maxNumberTime = 1;
     let maxOrderNum = 1;
 
-    // console.log("*********************"+ req.body.pointsInterest[0])
-
     DButilsAzure.execQuery("Select Max(numberTime) AS mnt from UserFavorites Where userName='" + userName + "'").then(function (result1) {
         if (result1.length > 0) {
             maxNumberTime = result1[0].mnt + 1;
@@ -82,23 +80,23 @@ router.post('/saveFavoriteInServer', function (req, res) {
             }
             else
                 maxOrderNum = result2[0].mon + 1;
-            for (var i = 0; i < points.length; i++) {
+            for (let i = 0; i < points.length; i++) {
                 DButilsAzure.execQuery("Select * from UserFavorites Where userName='" + userName + "' AND pointOfInterest='" + points[i] + "'").then(function (result4) {
                     if (result4.length == 0) {
 
                         DButilsAzure.execQuery("INSERT INTO UserFavorites VALUES ('" + userName + "', '" + points[i] + "', '" + maxNumberTime + "', '" + maxOrderNum + "')").then(function (result3) {
+                            res.sendStatus(200);
+                        }).catch(function(err){
+                            res.sendStatus(400);
                         });
                         maxNumberTime++;
                         maxOrderNum++;
-                    } 
-
-                    
+                    }                     
+                }).catch(function(err){
+                    res.sendStatus(400)
                 });
               
             }
-            res.send(points.length);
-
-            res.sendStatus(200);
 
         }).catch(function (err) { res.status(400).send(err); });
 

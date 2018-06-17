@@ -98,21 +98,21 @@ label{
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 40%;
-  position: center;
-  margin: auto;
-}
-
-/* Hide the images by default */
-.mySlides {
-    position: center;
-	border-radius: 20px;
-    background-color: rgba(255,0,0,0.3);
-	background-size: 50% auto;
-}
+	max-width: 1000px;
+	position: center;
+	margin: auto;
+  }
+  
+  /* Hide the images by default */
+  .mySlides {
+	  position: none;
+	  border-radius: 20px;
+	  background-color: rgba(255,0,0,0.3);
+	  background-size: 50% auto;
+  }
 
 .mySavedSlides {
-    position: center;
+    position: none;
 	border-radius: 20px;
     background-color: rgba(255,0,0,0.3);
 	background-size: 50% auto;
