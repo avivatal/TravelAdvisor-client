@@ -1,16 +1,16 @@
 
 <html ng-app="citiesApp">
     <head><title>TravelAdvisor</title>
-        <link rel="stylesheet" type="text/css" href="Welcome.css" />
+        <link rel="stylesheet" type="text/css" href="../../Welcome.css" />
 </head>
-    <body ng-controller="WelcomeController as wlcmCtrl"  ng-init="wlcmCtrl.username='guest'" >
+    <body ng-controller="indexController as inCtrl"  ng-init="inCtrl.username='guest'" >
 
             <ul class="navbar">
               <li><a class="active" href="#/">Home</a></li>
-              <li><a href="./About.html">About</a></li>
-              <li><a href="./POI.html">Points of Interest</a></li>
+              <li><a href="#About.html">About</a></li>
+              <li><a href="#POI.html">Points of Interest</a></li>
 
-              <li><a href="./Main.html">About</a></li>
+              <li><a href="#Main.html">About</a></li>
               <span ng-model="wlcmCtrl.userName">Hello, {{wlcmCtrl.userName}}!</span>
             </ul>
             

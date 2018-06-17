@@ -7,20 +7,25 @@ app.config(['$locationProvider', '$routeProvider', function($locationProvider, $
 
 
     $routeProvider.when('/', {
-        templateUrl: './index.html',
-        template: '<h1>Welcome to TravelAdvisor</h1>'
+        // templateUrl: './index.html',
+        template: '<h1>Welcome to TravelAdvisor</h1>',
+        controller: 'WelcomeController as wlcmCtrl'
     })
-        .when('/about', {
-            templateUrl: 'components/about.html',
+        .when('/About', {
+            templateUrl: 'components/About/about.html',
             controller : 'aboutController as abtCtrl'
         })
-        .when('/poi', {
-            templateUrl: 'components/poi.html',
-            controller : 'poiCtrl as poiCtrl'
+        .when('/POI', {
+            templateUrl: 'components/POI/POI.html',
+            controller : 'POIController as pCtrl'
         })
         .when('/register', {
-            templateUrl: 'Register.html',
-            //controller : 'RegisterController'
+            templateUrl: 'components/Users/register/Register.html',
+            controller : 'RegisterController as rgCtrl'
+        })
+        .when('/home', {
+            templateUrl: 'components/Users/home/Main.html',
+            controller : 'MainController as mnCtrl'
         })
         .otherwise({ redirectTo: '/' });
 
