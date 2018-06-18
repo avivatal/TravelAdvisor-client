@@ -8,30 +8,49 @@ angular.module('citiesApp')
 
     self.isRecoverMode = true;
     self.isLogin = false;
-
+    self.point = "";
 
     self.openReviewDialog = function(point){
+      self.point = point;
       $mdDialog.show({
-        controllerAs:'reViewDialogController',
+        controllerAs:'reviewDialogController',
         controller: function($mdDialog){
-          self.rate
           let controller = this;
+          controller.rate = 0;
+          controller.review = "";
+          controller.rates = [1,2,3,4,5]
           controller.hide = function hide(){
             $mdDialog.hide();
+          }
+          controller.save = function save(){
+            if(controller.rate !== 0){
+              $http.post(serverUrl + 'reg/Favorites/addRate',{pointName: self.point.pointName, rate:controller.rate})
+              .then(function(response){
+                alert("success")
+              },function(response){
+                alert("error")
+              })
+            }
+            if(controller.review != ""){
+              $http.post(serverUrl + 'reg/Favorites/addReview',{pointName: self.point.pointName, review:controller.review})
+              .then(function(response){
+                alert("success")
+              },function(response){
+                alert("error")
+              })
+            }
+            controller.hide();
           }
         },
         clickOutsideToClose:true,
         template: '<md-dialog aria-label="My Dialog">'+
-                      '<md-dialog-content class="sticky-container" style="margin-left:20px; white-space: pre-wrap;">Name:\n'+updatePoint.pointName +
-                      '<select ng-model="reViewDialogController.rate">'+
-                      '<option value="1">'+
-                      '<option value="2">'+
-                      '<option value="3">'+
-                      '<option value="4">'+
-                      '<option value="5">'+
-                      '</select>'+
+                      '<md-dialog-content class="sticky-container" style="margin:20px; background-color: #ff9966; white-space: pre-wrap;"><div style="font-size:20px">'+self.point.pointName +'</div>'+
+                      '\n'+'Rate Point '+'<select ng-model="reviewDialogController.rate" ng-options="option for option in reviewDialogController.rates">'+
+                      '</select>\n\n'+
+                      'Review Point <input type="text" ng-model="reviewDialogController.review">\n\n'+
+                      '<md-button ng-click=reviewDialogController.hide()>Close</md-button>' +
+                      '<md-button ng-click=reviewDialogController.save()>Save</md-button>'+
                       '</md-dialog-content>' +
-                      '<md-button ng-click=reViewDialogController.hide()>Close</md-button>' +
                       '</md-dialog>'
       });
     }
@@ -50,12 +69,12 @@ angular.module('citiesApp')
             },
             clickOutsideToClose:true,
             template: '<md-dialog aria-label="My Dialog">'+
-                          '<md-dialog-content class="sticky-container" style="margin-left:20px; white-space: pre-wrap;">Name:\n'+updatePoint.pointName +
+                          '<md-dialog-content class="sticky-container" style="background-color: #ff9966;margin-left:20px; white-space: pre-wrap;">Name:\n'+updatePoint.pointName +
                           '\n\nCategory:\n' + updatePoint.category + '\n\nDescription:\n' + updatePoint.description + '\n\nRating:\n' + updatePoint.rate  + '/5' + '\n\nNumber Of Rates:\n' + updatePoint.numberOfRates +
                           '\n\nNumber of Views:\n'+updatePoint.viewCount + '\n\nLastest Reviews:\n"' + updatePoint.lastReviewOne + '"\n\n"' + updatePoint.lastReviewTwo +
-                          '"\n<img src=' + updatePoint.picture + ' alt="">'+
-                          '</md-dialog-content>' +
+                          '"\n<img src=' + updatePoint.picture + ' alt="">\n'+
                           '<md-button ng-click=dialogController.hide()>Close</md-button>' +
+                          '</md-dialog-content>' +
                           '</md-dialog>'
           });
           $http.put(serverUrl + "Points/addView/"+updatePoint.pointName)

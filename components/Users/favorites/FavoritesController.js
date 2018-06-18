@@ -10,16 +10,25 @@ angular.module('citiesApp')
         self.points = [];
         self.selectedCategory = '';
         self.displayAll = true;
-        self.sortOptions = ["Rate high to Low","Rate low to high"];
+        self.sortOptions = ["None","Rate high to Low","Rate low to high"];
         self.rateSort = '';
         self.point = {}
         self.point.pointName = "";
+        $scope.orders = [];
+        $scope.selectedOrders = [];
+        self.myOrder=0;
 
-        self.userName = "aviva"
+      //  self.userName = "aviva"
 
         let serverUrl = 'http://localhost:3000/'
 
-        
+        $scope.filteredOrders = function(o){
+                return $scope.selectedOrders.indexOf(o) === -1 || self.myOrder === o ;
+        }
+        $scope.setSelected = function(o){
+            $scope.selectedOrders[$scope.selectedOrders.length] = o;
+            self.myOrder = o;
+        }
         self.routeToFav = function(){
             $location.path('/favorites')
         }
@@ -32,10 +41,20 @@ angular.module('citiesApp')
                         }
                     }
                 }, function(response){
-
             });
         }
         self.getCategories();
+
+        self.saveOrder = function(){
+            let newOrder = [];
+            for(let i=0; i<self.points.length; i++){
+                newOrder[newOrder.length] = document.getElementById(i).getElementsByTagName("td")[i].innerHTML;
+            }
+            $http.post(serverUrl + "manualSortFavorites", {pointsName:newOrder})
+                .then(function(response){
+
+                },function(response){});
+        }
 
         self.getSort = function(point){
             if(self.rateSort === "Rate high to Low"){
@@ -43,7 +62,7 @@ angular.module('citiesApp')
             } else if(self.rateSort === "Rate low to high"){
                 return 'rate';
             } else {
-                return ''
+                return 'orderNumber'
             }
         }
         self.selectCategory = function(){
@@ -74,7 +93,11 @@ angular.module('citiesApp')
                 .then(function(response){
                     if(response.data.length > 0){
                     self.points = response.data;
-                    self.hasFavorites = true;}
+                    self.hasFavorites = true;
+                    for(let i=0; i<self.points.length; i++){
+                        $scope.orders[ $scope.orders.length] = i+1;
+                    }
+                }
                 }, function(response){
                     alert("Something went wrong")
             });

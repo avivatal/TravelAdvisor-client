@@ -20,7 +20,6 @@ angular.module('citiesApp')
         self.point = {}
         self.point.pointName = "";
         self.favoritesCounter = 0;
-        self.userName = "aviva"
 
         let serverUrl = 'http://localhost:3000/'
 
@@ -71,8 +70,10 @@ angular.module('citiesApp')
 
        self.openDialog = function(point){
            $scope.inCtrl.openDialog(point)
-           self.getPointOfInterest();
        }
+       self.openReviewDialog = function(point){
+        $scope.inCtrl.openReviewDialog(point)
+    }
         self.getPointOfInterest = function () {
             $http.get(serverUrl + "Points/getAllPoints/")
                 .then(function (response) {
@@ -84,6 +85,7 @@ angular.module('citiesApp')
         self.getPointOfInterest();
 
         self.getFavorites = function () {
+            if($scope.inCtrl.isLogin){
             $http.get(serverUrl + "reg/Favorites/showFavoritePoints/")
                 .then(function (response) {
                     self.favorites = response.data;
@@ -91,6 +93,7 @@ angular.module('citiesApp')
                 }, function (response) {
                     alert("Something went wrong")
                 });
+            }
         }
 
         self.getFavorites();
