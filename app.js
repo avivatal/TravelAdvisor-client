@@ -1,4 +1,4 @@
-let app = angular.module('citiesApp', ["ngRoute", 'LocalStorageModule']);
+let app = angular.module('citiesApp', ["ngRoute", 'LocalStorageModule','ngMaterial', 'ngMessages']);
 
 app.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider)  {
 

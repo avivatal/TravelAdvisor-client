@@ -2,7 +2,7 @@ angular.module('citiesApp')
    .filter("filterByName",function(name){
 
     })
-    .controller('POIController', ['$http', '$scope', 'localStorageService', 'setHeadersToken', '$location', 'localStorageModel', function ($http, $scope, localStorageService, setHeadersToken, $location, localStorageModel) {
+    .controller('POIController', ['$http', '$scope', 'localStorageService', 'setHeadersToken', '$location', 'localStorageModel','$mdDialog', function ($http, $scope, localStorageService, setHeadersToken, $location, localStorageModel,$mdDialog) {
 
 
         self = this;
@@ -66,7 +66,13 @@ angular.module('citiesApp')
             }
         }
 
+        self.status = '  ';
+        self.customFullscreen = false;
 
+       self.openDialog = function(point){
+           $scope.inCtrl.openDialog(point)
+           self.getPointOfInterest();
+       }
         self.getPointOfInterest = function () {
             $http.get(serverUrl + "Points/getAllPoints/")
                 .then(function (response) {
@@ -131,26 +137,22 @@ angular.module('citiesApp')
                     });
                 }
             }
+            var pointsToAdd = [];
             for (var i = 0; i < self.newFavorites.length; i++) {
                 if (self.newFavorites[i] != 0) {
-                   /* $http({
-                        url: serverUrl + "reg/Favorites/saveFavoriteInServer",
-                        dataType: "json",
-                        method: "POST",
-                        data: {
-                            pointsInterest: [self.newFavorites[i].pointName]
-                        },
-                        headers :{
-                            "Content-Type": "application/json"
-                        }
-                    })*/$http.post(serverUrl + "reg/Favorites/saveFavoriteInServer", {pointsInterest: [self.newFavorites[i].pointName]})
-                    .then(function(response){
-                        alert("success")
-                    }, function(response){
-                    alert("Something went wrong")
-                });
+                    pointsToAdd[pointsToAdd.length] = self.newFavorites[i].pointName;
                 }
             }
+            if(self.newFavorites.length > 0){
+                $http.post(serverUrl + "reg/Favorites/saveFavoriteInServer", {pointsInterest: pointsToAdd})
+                .then(function(response){
+                    alert("success")
+                }, function(response){
+                alert(response.data)
+                });
+            }
+            localStorageModel.removeLocalStorage("newFavorites");
+            localStorageModel.removeLocalStorage("removeFavorites");
 
         }
 

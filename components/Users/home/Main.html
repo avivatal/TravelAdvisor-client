@@ -14,12 +14,12 @@
     <div class="slideshow-container">
     
       <!-- Full-width images with number and caption text -->
-      <div class="mySavedSlides fade">
+      <div ng-click="mnCtrl.openDialog(mnCtrl.saved1)" class="mySavedSlides fade">
         <h2 ng-model="mnCtrl.saved1.pointName" style="text-align:center">{{mnCtrl.saved1.pointName}}</h2>
         <img ng-model="mnCtrl.saved1.picture"  src={{mnCtrl.saved1.picture}} alt="" style="width:50%">
       </div>
     
-      <div class="mySavedSlides fade">
+      <div ng-click="mnCtrl.openDialog(mnCtrl.saved2)" class="mySavedSlides fade">
         <h2 ng-model="mnCtrl.saved2.pointName" style="text-align:center">{{mnCtrl.saved2.pointName}}</h2>
         <img ng-model="mnCtrl.saved2.picture"  src={{mnCtrl.saved2.picture}} alt="" style="width:50%">
       </div>
@@ -35,14 +35,14 @@
     <div class="slideshow-container">
     
       <!-- Full-width images with number and caption text -->
-      <div class="mySlides fade">
+      <div ng-click="mnCtrl.openDialog(mnCtrl.rec1)" class="mySlides fade">
         <h2 ng-model="mnCtrl.rec1.pointName" style="text-align:center">{{mnCtrl.rec1.pointName}}</h2>
         <img ng-model="mnCtrl.rec1.picture" src={{mnCtrl.rec1.picture}} alt="" style="width:50%">
         <div ng-model="mnCtrl.rec1.category" class="text">Category: {{mnCtrl.rec1.category}}</div>
         <div ng-model="mnCtrl.rec1.rate" class="text">Rating: {{mnCtrl.rec1.rate}}/5</div>
       </div>
     
-      <div class="mySlides fade">
+      <div ng-click="mnCtrl.openDialog(mnCtrl.rec2)" class="mySlides fade">
         <h2 ng-model="mnCtrl.rec2.pointName" style="text-align:center">{{mnCtrl.rec2.pointName}}</h2>
         <img ng-model="mnCtrl.rec2.picture" src={{mnCtrl.rec2.picture}} alt="" style="width:50%">
         <div ng-model="mnCtrl.rec2.category" class="text">Category: {{mnCtrl.rec2.category}}</div>

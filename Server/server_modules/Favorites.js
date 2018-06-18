@@ -32,7 +32,7 @@ router.get('/showFavoritePoints', function (req, res) {
     req.decoded = decoded;
     var userName = decoded.payload.userName;
     console.log(userName);
-    DButilsAzure.execQuery("Select pointName, picture, viewCount, description,PointsOfInterest.category,rate,lastReviewOne,lastReviewTwo From UserFavorites INNER JOIN PointsOfInterest ON UserFavorites.pointOfInterest = PointsOfInterest.pointName AND UserFavorites.userName = '" + userName + "'")
+    DButilsAzure.execQuery("Select pointName, picture, viewCount, description,PointsOfInterest.category,rate,lastReviewOne,lastReviewTwo,orderNumber,numberTime  From UserFavorites INNER JOIN PointsOfInterest ON UserFavorites.pointOfInterest = PointsOfInterest.pointName AND UserFavorites.userName = '" + userName + "'")
         .then(function (result) {
             res.send(result);
         }).catch(function (err) { res.send(err); })
@@ -67,30 +67,38 @@ router.post('/saveFavoriteInServer', function (req, res) {
     let maxOrderNum = 1;
 
     DButilsAzure.execQuery("Select Max(numberTime) AS mnt from UserFavorites Where userName='" + userName + "'").then(function (result1) {
-        if (result1.length > 0) {
-            maxNumberTime = result1[0].mnt + 1;
-
+        console.log(result1[0].mnt == null)
+        if (result1[0].mnt == null) {
+            maxNumberTime = 1;
+            console.log(maxNumberTime)
+            console.log("*****************************************")
         }
         else {
-            maxNumberTime = 1;
+            maxNumberTime = result1[0].mnt + 1;
+            console.log(maxNumberTime)
+            console.log("##########################")
+
         }
         DButilsAzure.execQuery("Select Max(orderNumber) AS mon from UserFavorites Where userName='" + userName + "'").then(function (result2) {
-            if (result1.length == 0) {
+            if (result2[0].mon == null) {
                 maxOrderNum = 1;
             }
-            else
+            else{
                 maxOrderNum = result2[0].mon + 1;
+                console.log("*****************************************")
+                console.log(maxNumberTime)
+            }
+               
             for (let i = 0; i < points.length; i++) {
                 DButilsAzure.execQuery("Select * from UserFavorites Where userName='" + userName + "' AND pointOfInterest='" + points[i] + "'").then(function (result4) {
                     if (result4.length == 0) {
-
-                        DButilsAzure.execQuery("INSERT INTO UserFavorites VALUES ('" + userName + "', '" + points[i] + "', '" + maxNumberTime + "', '" + maxOrderNum + "')").then(function (result3) {
+                        DButilsAzure.execQuery("INSERT INTO UserFavorites VALUES ('" + userName + "', '" + points[i] + "', " + maxNumberTime + ", " + maxOrderNum + ")").then(function (result3) {
                             res.sendStatus(200);
                         }).catch(function(err){
                             res.sendStatus(400);
                         });
-                        maxNumberTime++;
-                        maxOrderNum++;
+                        maxNumberTime ++;
+                        maxOrderNum ++;
                     }                     
                 }).catch(function(err){
                     res.sendStatus(400)

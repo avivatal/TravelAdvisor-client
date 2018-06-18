@@ -64,21 +64,21 @@
     <div class="slideshow-container">
 
         <!-- Full-width images with number and caption text -->
-        <div class="mySlides fade">
+        <div ng-click="wlcmCtrl.openDialog(wlcmCtrl.random1)" class="mySlides fade">
             <h2 ng-model="wlcmCtrl.random1.pointName" style="text-align:center">{{wlcmCtrl.random1.pointName}}</h2>
             <img ng-model="wlcmCtrl.random1.picture" src={{wlcmCtrl.random1.picture}} alt="" style="width:50%">
             <div ng-model="wlcmCtrl.random1.category" class="text">Category: {{wlcmCtrl.random1.category}}</div>
             <div ng-model="wlcmCtrl.random1.rate" class="text">Rating: {{wlcmCtrl.random1.rate}}/5</div>
         </div>
 
-        <div class="mySlides fade">
+        <div ng-click="wlcmCtrl.openDialog(wlcmCtrl.random2)" class="mySlides fade">
             <h2 ng-model="wlcmCtrl.random2.pointName" style="text-align:center">{{wlcmCtrl.random2.pointName}}</h2>
             <img ng-model="wlcmCtrl.random2.picture" src={{wlcmCtrl.random2.picture}} alt="" style="width:50%">
             <div ng-model="wlcmCtrl.random2.category" class="text">Category: {{wlcmCtrl.random2.category}}</div>
             <div ng-model="wlcmCtrl.random2.rate" class="text">Rating: {{wlcmCtrl.random2.rate}}/5</div>
         </div>
 
-        <div class="mySlides fade">
+        <div ng-click="wlcmCtrl.openDialog(wlcmCtrl.random3)" class="mySlides fade">
             <h2 ng-model="wlcmCtrl.random3.pointName" style="text-align:center">{{wlcmCtrl.random3.pointName}}</h2>
             <img ng-model="wlcmCtrl.random3.picture" src={{wlcmCtrl.random3.picture}} alt="" style="width:50%">
             <div ng-model="wlcmCtrl.random3.category" class="text">Category: {{wlcmCtrl.random3.category}}</div>

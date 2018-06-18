@@ -69,8 +69,12 @@ router.put('/addView/:pointName', function (req, res) {
     var pointName = req.params.pointName;
     DButilsAzure.execQuery("Select * from PointsOfInterest Where pointName = '" + pointName + "'").then(function (result) 
     {
-        var count=result[0].viewCount+1;
-        DButilsAzure.execQuery("UPDATE PointsOfInterest SET viewCount='" + count + "' WHERE pointName = '" + pointName + "'");
+        let count=result[0].viewCount+1;
+        DButilsAzure.execQuery("UPDATE PointsOfInterest SET viewCount='" + count + "' WHERE pointName = '" + pointName + "'")
+        .then(function(response){
+            rse.sendStatus(200)
+        }).catch(function(err){ 
+            res.sendStatus(400)})
     }).catch(function (err) { res.status(400).send(err); });
 });
 

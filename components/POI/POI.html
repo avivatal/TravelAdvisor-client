@@ -1,14 +1,9 @@
-<html ng-app="citiesApp">
 
-<head>
     <title>TravelAdvisor</title>
     <link rel="stylesheet" type="text/css" href="../../Welcome.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-</head>
-
-<body>
     <label style="float:right;font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">
         <i style="cursor:pointer" ng-click="pCtrl.routeToFav()" class="fa fa-star"></i> My Favorites (<span ng-model="pCtrl.favoritesCounter">{{pCtrl.favoritesCounter}}</span>)</label>
 
@@ -38,20 +33,22 @@
     <label style="margin-top:35px">
         <input type="button" value="Save changes" ng-click="pCtrl.saveInServer()">
     </label>
+
+    
+
     <table style="text-align:center">
         <tr>
             <td>Point of Interest</td>
             <td>Description</td>
             <td>Category</td>
-            <td>Rating
-                <i class="fa fa-sort-down"></i>
-            </td>
+            <td>Rating</td>
             <td ng-if="pCtrl.userName !== 'guest'">Add to Favorites</td>
+            <td>show</td>
         </tr>
         <tr ng-repeat="point in pCtrl.points | orderBy: pCtrl.getSort() | filter: {pointName:pCtrl.search} | filter: pCtrl.filter"><!-- pCtrl.filter-->
 
 
-            <td>{{point.pointName}}</td>
+            <td >{{point.pointName}}</td>
             <td>
                 <img src={{point.picture}} alt="" style="width:30%">
             </td>
@@ -60,8 +57,6 @@
             <td id="{{$index}}" ng-if="pCtrl.userName !== 'guest'">
                 <i style="cursor: pointer" class='fa {{pCtrl.isFavorite(point)}}' ng-click="pCtrl.addOrRemoveFavorites(point,$index)"></i>
             </td>
+            <td><input type="button" value="Details" ng-click="pCtrl.openDialog(point); pCtrl.getPointOfInterest()"></td>
         </tr>
     </table>
-</body>
-
-</html>

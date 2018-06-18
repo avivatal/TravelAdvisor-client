@@ -26,7 +26,10 @@ angular.module("citiesApp")
             localStorageService.remove(key);
             localStorageService.set(key,value);
         }
-
+        self.removeLocalStorage = function (key)
+        {
+            localStorageService.remove(key);
+        }
 
 
     }]);

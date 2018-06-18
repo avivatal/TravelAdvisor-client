@@ -21,19 +21,29 @@
             <table>
                 <tr>
                     <td>Point of Interest</td>
-                    <td>Description</td>
+                    <td>Image</td>
                     <td>Category</td>
-                    <td>Rating <i class="fa fa-sort-down" ></i></td>
+                    <td>Category</td>
+                    <td>Rating</i></td>
                     <td>Remove</td>
+                    <td>Rate</td>
+                    <td>Show</td>
+
                 </tr> 
-                <tr ng-repeat="point in fvCtrl.points | orderBy:fvCtrl.getSort() | filter: fvCtrl.filter">
+                <!-- | orderBy: fvCtrl.getSort() | -->
+                <tr ng-repeat="point in fvCtrl.points | orderBy: fvCtrl.getSort() | filter: fvCtrl.filter">
                     <td>{{point.pointName}}</td>
                     <td>
                          <img src={{point.picture}} alt="" style="width:30%"> 
                         </td>
                     <td>{{point.category}}</td>
+                    <td>{{point.orderNumber}}</td>
                     <td>{{point.rate}}/5</td>
                     <td><i style="cursor: pointer" class="fa fa-close" ng-click ="fvCtrl.RemoveFavorites(point)"></i></td>
+                    <td><select ng-model="fvCtrl.pointsOrder" ng-options="option for option in fvCtrl.sortOptions">
+                    </select></td>
+                    <td><input type="button" value="Detalis" ng-click="fvCtrl.openDialog(point)"></td>
+
                 </tr>
             </table>
         </div> 

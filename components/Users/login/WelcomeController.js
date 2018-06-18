@@ -5,24 +5,22 @@ angular.module('citiesApp')
     this.set = function(t){
         token = t;
         $http.defaults.headers.common['x-access-token'] = t;
-        $http.defaults.headers.common['Content-Type'] = 'application/json';
+        // $http.defaults.headers.common['Content-Type'] = 'application/json';
         console.log("set")    }
        this.setName = function(name){
         this.userName = name;
     }
 }])
-    .controller('WelcomeController',['$http','$scope', 'localStorageService', 'setHeadersToken','$location', function ($http,$scope,localStorageService, setHeadersToken,$location) {
+    .controller('WelcomeController',['$http','$scope', 'localStorageService', 'setHeadersToken','$location','localStorageModel', function ($http,$scope,localStorageService, setHeadersToken,$location,localStorageModel) {
 
 
         self = this;
 
-        
-
+    
         self.random1;
         self.random2;
         self.random3;
 
-//self.isRecoverMode = true;
         let serverUrl = 'http://localhost:3000/'
 
         self.signin = function(){
@@ -40,8 +38,12 @@ angular.module('citiesApp')
                     self.login.content = "Something went wrong"
                 });
             }
+            localStorageModel.removeLocalStorage("newFavorites");
+            localStorageModel.removeLocalStorage("removeFavorites");
         }
-
+        self.openDialog = function(point){
+            $scope.inCtrl.openDialog(point)
+        }
         self.showRecover = function(){
             $scope.inCtrl.isRecoverMode = !$scope.inCtrl.isRecoverMode;
      //       self.isRecoverMode = !self.isRecoverMode;

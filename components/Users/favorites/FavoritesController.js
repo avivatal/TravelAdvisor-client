@@ -62,6 +62,12 @@ angular.module('citiesApp')
             }
         }
 
+        self.openDialog = function(point){
+            $scope.inCtrl.openDialog(point)
+        }
+        self.openReviewDialog = function(point){
+            $scope.inCtrl.openReviewDialog(point)
+        }
 
         self.getPointOfInterest = function(){
             $http.get(serverUrl + "reg/Favorites/showFavoritePoints/")
@@ -76,13 +82,21 @@ angular.module('citiesApp')
         self.getPointOfInterest();
 
         self.RemoveFavorites = function(point){
-                    self.point.pointName = point.pointName
-                    $http.delete(serverUrl + "reg/Favorites/removePointFromFavorite/",  self.point)
-                        .then(function(response){
-                            alert("success");
+                    $http({
+                        url: serverUrl + "reg/Favorites/removePointFromFavorite",
+                        dataType: "json",
+                        method: "DELETE",
+                        data: {
+                            pointName: point.pointName
+                        },
+                        headers :{
+                            "Content-Type": "application/json"
+                        }
+                    }).then(function (response) {
+                            alert("success")
                             self.getPointOfInterest(); 
-                        }, function(response){
-                        alert("Something went wrong")
+                        }, function (response) {
+                            alert("Something went wrong")
                     });
         }
 

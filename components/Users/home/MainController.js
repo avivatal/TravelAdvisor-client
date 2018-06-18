@@ -27,6 +27,9 @@ angular.module('citiesApp')
 
         self.getRec();
 
+        self.openDialog = function(point){
+            $scope.inCtrl.openDialog(point)
+        }
         self.getSaved = function(){
             $http.get(serverUrl + "reg/Favorites/lastSavedPoints")
                 .then(function(response){
