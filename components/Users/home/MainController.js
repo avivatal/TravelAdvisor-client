@@ -42,5 +42,61 @@ angular.module('citiesApp')
         }
 
         self.getSaved();
+
+
+
+        self.slideIndex = 1;
+        self.slideSaved = 1;
+//        $(document).ready(function(){
+
+//      });
+        
+      
+      // Next/previous controls
+      self.plusSlides = function(n) {
+        self.showSlides(self.slideIndex += n);
+      }
+
+      self.plusSavedSlides = function (n) {
+        self.showSavedSlides(self.slideSaved += n);
+      }
+      
+      // Thumbnail image controls
+       self.currentSlide = function(n) {
+        self.showSlides(self.slideIndex = n);
+      }
+
+      // Thumbnail image controls
+      self.currentSavedSlide = function (n){
+        self.showSavedSlides(self.slideSaved = n);
+      }
+      
+      self.showSlides = function(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        if (n > slides.length) {self.slideIndex = 1} 
+        if (n < 1) {self.slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none"; 
+        }
+        slides[self.slideIndex-1].style.display = "block"; 
+      }
+
+      self.showSavedSlides = function(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySavedSlides");
+        if (n > slides.length) {self.slideSaved = 1} 
+        if (n < 1) {self.slideSaved = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none"; 
+        }
+        slides[self.slideSaved-1].style.display = "block"; 
+        
+      }
+      $(document).ready(function(){
+
+        self.showSavedSlides(self.slideSaved);
+        self.showSlides(self.slideIndex);
+      });
     }]);
     

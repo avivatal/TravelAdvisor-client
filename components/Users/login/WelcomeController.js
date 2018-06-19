@@ -1,17 +1,11 @@
 angular.module('citiesApp')
     .service('setHeadersToken', ['$http', function($http){
     let token = "";
-    this.userName = "guest"
     this.set = function(t){
         token = t;
         $http.defaults.headers.common['x-access-token'] = t;
-        // $http.defaults.headers.common['Content-Type'] = 'application/json';
-        console.log("set")    }
-       this.setName = function(name){
-        this.userName = name;
-    }
-}])
-    .controller('WelcomeController',['$http','$scope', 'localStorageService', 'setHeadersToken','$location','localStorageModel', function ($http,$scope,localStorageService, setHeadersToken,$location,localStorageModel) {
+    }}])
+    .controller('WelcomeController',['$http','$scope', 'setHeadersToken','$location','localStorageModel', function ($http,$scope, setHeadersToken,$location,localStorageModel) {
 
 
         self = this;
@@ -29,11 +23,18 @@ angular.module('citiesApp')
             if(username.length>0 && password.length>0){
                 $http.post(serverUrl + "Users/login", self.user)
                 .then(function(response){
-                    localStorageService.set("token", response.data.token)
+                    $scope.isLogin = true;
+                    $scope.userName = username;
+
+
+                    localStorageModel.addLocalStorage("token", response.data.token)
+                    localStorageModel.addLocalStorage("name",username);
+                    localStorageModel.addLocalStorage("isLogin",true)
                     setHeadersToken.set(response.data.token);
-                    $scope.inCtrl.isLogin = true;
-                    $scope.inCtrl.userName = username;
+
+
                     $location.path('/Main');
+
                 }, function(response){
                     self.login.content = "Something went wrong"
                 });
@@ -45,9 +46,8 @@ angular.module('citiesApp')
             $scope.inCtrl.openDialog(point)
         }
         self.showRecover = function(){
-            $scope.inCtrl.isRecoverMode = !$scope.inCtrl.isRecoverMode;
-     //       self.isRecoverMode = !self.isRecoverMode;
-     //       alert(self.isRecoverMode)
+           // $scope.inCtrl.isRecoverMode = !$scope.inCtrl.isRecoverMode;
+           $scope.inCtrl.recoverPassword();
         }
         self.recoverPassword = function(){
 
@@ -72,7 +72,7 @@ angular.module('citiesApp')
                 console.log('success')
             }, function(response){})
         }
-        self.getRandomSites();
+        
 
 self.slideIndex = 1;
 
@@ -102,7 +102,11 @@ self.showSlides = function (n) {
   dots[self.slideIndex-1].className += " active";
 }
 
-self.showSlides(self.slideIndex);
+$(document).ready(function(){
+    self.getRandomSites();
+    self.showSlides(self.slideIndex);
+});
+
 
     }]);
 

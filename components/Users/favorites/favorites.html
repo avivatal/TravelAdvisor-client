@@ -23,7 +23,6 @@
                     <td>Point of Interest</td>
                     <td>Image</td>
                     <td>Category</td>
-                    <td>Priority</td>
                     <td>Rate</i></td>
                     <td>Review</td>
                     <td>Show</td>
@@ -38,21 +37,20 @@
                          <img src={{point.picture}} alt="" style="width:30%"> 
                         </td>
                     <td>{{point.category}}</td>
-                    <td>{{point.orderNumber}}</td>
                     <td>
-                        <i ng-if="$index !== 0" ng-click="fvCtrl.swapUp($index)" class="fa fa-sort-asc"></i>
-                        <i ng-if="$index !== fvCtrl.points.length-1" class="fa fa-sort-desc"></i>
+                        <i ng-if="$index !== 0" style="cursor: pointer;" ng-click="fvCtrl.swapUp($index)" class="fa fa-sort-asc"></i>
+                        <i ng-if="$index !== fvCtrl.points.length-1" style="cursor: pointer;" ng-click="fvCtrl.swapDown($index)" class="fa fa-sort-desc"></i>
 
                     </td>
                     <!-- <td><select ng-model="myOrder" ng-value="myOrder" ng-options="order as order for order in orders | filter: filteredOrders" ng-change="setSelected(myOrder)">
                         </select></td> -->
-                    <td><input type="button" value="Review" ng-click="fvCtrl.openReviewDialog(point)"></td>
-                    <td><input type="button" value="Detalis" ng-click="fvCtrl.openDialog(point)"></td>
+                    <td><input type="button" value="Review" ng-click="fvCtrl.openReviewDialog($index)"></td>
+                    <td><input type="button" value="Detalis" ng-click="fvCtrl.openDialog($index)"></td>
 
                     <td><i style="cursor: pointer" class="fa fa-close" ng-click ="fvCtrl.RemoveFavorites(point)"></i></td>
                 </tr>
             </table>
-            <input type="button" value="test" ng-click="fvCtrl.test()">
+            <input type="button" value="Save Plan" ng-click="fvCtrl.saveOrder()">
         </div> 
         <div ng-if="!fvCtrl.hasFavorites">
                 <h1>You dont have any favorites yet :(</h1>

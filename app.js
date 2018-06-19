@@ -10,7 +10,7 @@ app.config(['$locationProvider', '$routeProvider', function($locationProvider, $
             controller : 'WelcomeController as wlcmCtrl'
         })
         .when('/About', {
-            templateUrl: '/components/About/about.html',
+            templateUrl: '/components/About/About.html',
             controller : 'aboutController as abtCtrl'
         })
         .when('/POI', {

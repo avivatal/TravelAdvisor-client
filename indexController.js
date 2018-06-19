@@ -1,14 +1,67 @@
 angular.module('citiesApp')
-  .controller('indexController', ['$http', 'setHeadersToken', '$mdDialog', '$scope', function ($http, setHeadersToken, $mdDialog, $scope) {
+  .controller('indexController', ['$http', 'setHeadersToken', '$mdDialog', '$scope','localStorageModel', function ($http, setHeadersToken, $mdDialog, $scope, localStorageModel) {
 
 
     self = this;
-    self.userName = "Guest";
+    $scope.userName = "Guest";
     let serverUrl = 'http://localhost:3000/';
 
     self.isRecoverMode = true;
-    self.isLogin = false;
+    $scope.isLogin = false;
     self.point = "";
+
+    if(localStorageModel.getLocalStorage("token")){
+      setHeadersToken.set(localStorageModel.getLocalStorage("token"))
+      $scope.userName = localStorageModel.getLocalStorage("name");
+      $scope.isLogin = localStorageModel.getLocalStorage("isLogin");
+
+    }
+
+    self.logOut = function(){
+
+      localStorageModel.removeLocalStorage("name");
+      localStorageModel.removeLocalStorage("isLogin");
+      localStorageModel.removeLocalStorage("token");
+      
+      $scope.userName = "Guest";
+      $scope.isLogin = false;
+      $scope.$apply();
+  
+    }
+
+    self.recoverPassword = function(){
+      $mdDialog.show({
+        controllerAs:'pwDialogController',
+        controller: function($mdDialog){
+          let controller = this;
+          controller.userName = "";
+          controller.answer = "";
+          controller.hide = function hide(){
+            $mdDialog.hide();
+          }
+          controller.save = function save(){
+            var recover = {userName: controller.userName, passwordRecoveryAnswer: controller.answer}
+            $http.post(serverUrl+'Users/passwordRecovery',recover)
+            .then(function(response){
+                alert('Your password is '+ response.data)
+            },function(response){
+                alert('Invalid parameters')
+            })
+            controller.hide();
+          }
+        },
+        clickOutsideToClose:true,
+        template: '<md-dialog aria-label="My Dialog">'+
+                      '<md-dialog-content class="sticky-container" style="padding:20px; background-color: #ff9966; white-space: pre-wrap;">'+' <h3>Recover Your Password:</h3> Username:'+
+                      '\n<input type="text" ng-model="pwDialogController.userName">'+'\n\nWhat is your mothers maiden name?'+
+                      '\n<input type="text" ng-model="pwDialogController.answer">'+
+                      '\n\n<md-button ng-click=pwDialogController.save()>Submit</md-button>'+
+                      '<md-button ng-click=pwDialogController.hide()>Close</md-button>' +
+                      
+                      '</md-dialog-content>' +
+                      '</md-dialog>'
+      });
+    }
 
     self.openReviewDialog = function(point){
       self.point = point;
@@ -44,7 +97,7 @@ angular.module('citiesApp')
         },
         clickOutsideToClose:true,
         template: '<md-dialog aria-label="My Dialog">'+
-                      '<md-dialog-content class="sticky-container" style="margin:20px; background-color: #ff9966; white-space: pre-wrap;"><div style="font-size:20px">'+self.point.pointName +'</div>'+
+                      '<md-dialog-content class="sticky-container" style="padding:20px; background-color: #ff9966; white-space: pre-wrap;"><div style="font-size:20px">'+self.point.pointName +'</div>'+
                       '\n'+'Rate Point '+'<select ng-model="reviewDialogController.rate" ng-options="option for option in reviewDialogController.rates">'+
                       '</select>\n\n'+
                       'Review Point <input type="text" ng-model="reviewDialogController.review">\n\n'+
@@ -69,10 +122,10 @@ angular.module('citiesApp')
             },
             clickOutsideToClose:true,
             template: '<md-dialog aria-label="My Dialog">'+
-                          '<md-dialog-content class="sticky-container" style="background-color: #ff9966;margin-left:20px; white-space: pre-wrap;">Name:\n'+updatePoint.pointName +
+                          '<md-dialog-content class="sticky-container" style="background-color: #ff9966; padding:20px; white-space: pre-wrap;">Name:\n'+updatePoint.pointName +
                           '\n\nCategory:\n' + updatePoint.category + '\n\nDescription:\n' + updatePoint.description + '\n\nRating:\n' + updatePoint.rate  + '/5' + '\n\nNumber Of Rates:\n' + updatePoint.numberOfRates +
                           '\n\nNumber of Views:\n'+updatePoint.viewCount + '\n\nLastest Reviews:\n"' + updatePoint.lastReviewOne + '"\n\n"' + updatePoint.lastReviewTwo +
-                          '"\n<img src=' + updatePoint.picture + ' alt="">\n'+
+                          '"\n<img style="size:20% " src=' + updatePoint.picture + ' alt="">\n'+
                           '<md-button ng-click=dialogController.hide()>Close</md-button>' +
                           '</md-dialog-content>' +
                           '</md-dialog>'

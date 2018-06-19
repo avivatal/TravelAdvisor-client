@@ -48,12 +48,64 @@ angular.module('citiesApp')
         self.saveOrder = function(){
             let newOrder = [];
             for(let i=0; i<self.points.length; i++){
-                newOrder[newOrder.length] = document.getElementById(i).getElementsByTagName("td")[i].innerHTML;
+                newOrder[newOrder.length] = document.getElementById(i).getElementsByTagName("td")[0].innerHTML;
             }
-            $http.post(serverUrl + "manualSortFavorites", {pointsName:newOrder})
+            $http.post(serverUrl + "reg/Favorites/manualSortFavorites", {pointsName:newOrder})
                 .then(function(response){
 
                 },function(response){});
+        }
+
+        self.swapUp = function(index){
+            var curName = document.getElementById(index).getElementsByTagName("td")[0].innerHTML;
+            var aboveName = document.getElementById(index-1).getElementsByTagName("td")[0].innerHTML;
+            var curImg = document.getElementById(index).getElementsByTagName("td")[1].innerHTML;
+            var aboveImg = document.getElementById(index-1).getElementsByTagName("td")[1].innerHTML;
+            var curCat = document.getElementById(index).getElementsByTagName("td")[2].innerHTML;
+            var aboveCat = document.getElementById(index-1).getElementsByTagName("td")[2].innerHTML;
+            var curCat = document.getElementById(index).getElementsByTagName("td")[2].innerHTML;
+            var aboveCat = document.getElementById(index-1).getElementsByTagName("td")[2].innerHTML;
+
+            //swap name
+            var tmpName = curName;
+            document.getElementById(index).getElementsByTagName("td")[0].innerHTML = aboveName;
+            document.getElementById(index-1).getElementsByTagName("td")[0].innerHTML = tmpName;
+
+            //swap img
+            var tmpImg = curImg;
+            document.getElementById(index).getElementsByTagName("td")[1].innerHTML = aboveImg;
+            document.getElementById(index-1).getElementsByTagName("td")[1].innerHTML = tmpImg;
+
+            //swap category
+            var tmpCat = curCat;
+            document.getElementById(index).getElementsByTagName("td")[2].innerHTML = aboveCat;
+            document.getElementById(index-1).getElementsByTagName("td")[2].innerHTML = tmpCat;
+        }
+
+        self.swapDown = function(index){
+            var curName = document.getElementById(index).getElementsByTagName("td")[0].innerHTML;
+            var aboveName = document.getElementById(index+1).getElementsByTagName("td")[0].innerHTML;
+            var curImg = document.getElementById(index).getElementsByTagName("td")[1].innerHTML;
+            var aboveImg = document.getElementById(index+1).getElementsByTagName("td")[1].innerHTML;
+            var curCat = document.getElementById(index).getElementsByTagName("td")[2].innerHTML;
+            var aboveCat = document.getElementById(index+1).getElementsByTagName("td")[2].innerHTML;
+            var curCat = document.getElementById(index).getElementsByTagName("td")[2].innerHTML;
+            var aboveCat = document.getElementById(index+1).getElementsByTagName("td")[2].innerHTML;
+
+            //swap name
+            var tmpName = curName;
+            document.getElementById(index).getElementsByTagName("td")[0].innerHTML = aboveName;
+            document.getElementById(index+1).getElementsByTagName("td")[0].innerHTML = tmpName;
+
+            //swap img
+            var tmpImg = curImg;
+            document.getElementById(index).getElementsByTagName("td")[1].innerHTML = aboveImg;
+            document.getElementById(index+1).getElementsByTagName("td")[1].innerHTML = tmpImg;
+
+            //swap category
+            var tmpCat = curCat;
+            document.getElementById(index).getElementsByTagName("td")[2].innerHTML = aboveCat;
+            document.getElementById(index+1).getElementsByTagName("td")[2].innerHTML = tmpCat;
         }
 
         self.getSort = function(point){
@@ -81,11 +133,20 @@ angular.module('citiesApp')
             }
         }
 
-        self.openDialog = function(point){
-            $scope.inCtrl.openDialog(point)
+        self.openDialog = function(index){
+            var name =  document.getElementById(index).getElementsByTagName("td")[0].innerHTML;
+            $http.get(serverUrl + "Points/showPoint/" + name)
+                .then(function(response){
+                    $scope.inCtrl.openDialog(response.data[0])
+                }, function(response){})
         }
-        self.openReviewDialog = function(point){
-            $scope.inCtrl.openReviewDialog(point)
+
+        self.openReviewDialog = function(index){
+            var name = document.getElementById(index).getElementsByTagName("td")[0].innerHTML
+            $http.get(serverUrl + "Points/showPoint/" + name)
+                .then(function(response){
+                    $scope.inCtrl.openReviewDialog(response.data[0])
+                }, function(response){})
         }
 
         self.getPointOfInterest = function(){
@@ -102,6 +163,8 @@ angular.module('citiesApp')
                     alert("Something went wrong")
             });
         }
+
+
         self.getPointOfInterest();
 
         self.RemoveFavorites = function(point){

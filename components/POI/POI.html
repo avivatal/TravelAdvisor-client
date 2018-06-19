@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-    <label ng-if="inCtrl.userName !== 'Guest'" style="float:right;font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">
+    <label ng-if="userName !== 'Guest'" style="float:right;font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">
         <i style="cursor:pointer" ng-click="pCtrl.routeToFav()" class="fa fa-star"></i> My Favorites (<span ng-model="pCtrl.favoritesCounter">{{pCtrl.favoritesCounter}}</span>)</label>
 
     <h1>Delhi's Points of Interest</h1>
@@ -31,7 +31,7 @@
     </label>
 
     <label style="margin-top:35px">
-        <input ng-if="inCtrl.userName !== 'Guest'" type="button" value="Save changes" ng-click="pCtrl.saveInServer()">
+        <input ng-if="userName !== 'Guest'" type="button" value="Save changes" ng-click="pCtrl.saveInServer()">
     </label>
 
     
@@ -41,8 +41,8 @@
             <td>Point of Interest</td>
             <td>Description</td>
             <td>Category</td>
-            <td ng-if="inCtrl.userName !== 'Guest'">Add to Favorites</td>
-            <td ng-if="inCtrl.userName !== 'Guest'">Review</td>
+            <td ng-if="userName !== 'Guest'">Add to Favorites</td>
+            <td ng-if="userName !== 'Guest'">Review</td>
             <td>show</td>
         </tr>
         <tr ng-repeat="point in pCtrl.points | orderBy: pCtrl.getSort() | filter: {pointName:pCtrl.search} | filter: pCtrl.filter"><!-- pCtrl.filter-->
@@ -53,10 +53,10 @@
                 <img src={{point.picture}} alt="" style="width:30%">
             </td>
             <td>{{point.category}}</td>
-            <td id="{{$index}}" ng-if="inCtrl.userName !== 'Guest'">
+            <td id="{{$index}}" ng-if="userName !== 'Guest'">
                 <i style="cursor: pointer" class='fa {{pCtrl.isFavorite(point)}}' ng-click="pCtrl.addOrRemoveFavorites(point,$index)"></i>
             </td>
-            <td ng-if="inCtrl.userName !== 'Guest'"><input type="button" value="Review" ng-click="pCtrl.openReviewDialog(point)"></td>
+            <td ng-if="userName !== 'Guest'"><input type="button" value="Review" ng-click="pCtrl.openReviewDialog(point)"></td>
             <td><input type="button" value="Details" ng-click="pCtrl.openDialog(point)"></td>
         </tr>
     </table>
