@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
         <link rel="stylesheet" type="text/css" href=" Welcome.css" />
 </head>
-    <body ng-controller="indexController as inCtrl">
+    <body ng-controller="indexController">
 
 
             <ul class="navbar">
@@ -13,8 +13,9 @@
               <li><a href="#/POI">Points of Interest</a></li>
 
               <li ng-if="isLogin"><a href="#/Main">My Home</a></li>
-              <a ng-if="isLogin" href="/" ng-click="inCtrl.logOut()">LogOut</a>
-              <label ng-model="userName">Hello, {{userName}}!</label>
+              <li ng-if="isLogin"><a style="cursor:pointer" ng-if="isLogin" type="button" ng-click="logOut()">Log Out</a> </li>
+              
+              <span ng-model="userName">Hello, {{userName}}!</span>
             </ul>
             
         <br>

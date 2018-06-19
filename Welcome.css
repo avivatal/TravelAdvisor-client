@@ -176,6 +176,14 @@ max-width: 30%;
 padding-top: 5%;
 	margin-left: 35%;
 }
+
+.mySavedSlides img{
+	max-height: 30%;
+	max-width: 30%;
+	margin-bottom: 10%;
+	padding-top: 5%;
+		margin-left: 35%;
+	}
 	
 	
 

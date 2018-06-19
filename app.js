@@ -11,7 +11,6 @@ app.config(['$locationProvider', '$routeProvider', function($locationProvider, $
         })
         .when('/About', {
             templateUrl: '/components/About/About.html',
-            controller : 'aboutController as abtCtrl'
         })
         .when('/POI', {
             templateUrl: '/components/POI/POI.html',

@@ -39,7 +39,7 @@
     <a style="margin-right:30px;" href="#/register">Register</a>
     <a href="#" ng-click="wlcmCtrl.showRecover()">Forgot my Password</a>
 
-    <div ng-hide="inCtrl.isRecoverMode">
+    <div ng-hide="isRecoverMode">
         <form ng-submit="wlcmCtrl.recoverPassword()">
             Username:
             <input type="text" ng-model="wlcmCtrl.recover.userName">

@@ -18,7 +18,6 @@ angular.module('citiesApp')
         $scope.selectedOrders = [];
         self.myOrder=0;
 
-      //  self.userName = "aviva"
 
         let serverUrl = 'http://localhost:3000/'
 
@@ -137,7 +136,7 @@ angular.module('citiesApp')
             var name =  document.getElementById(index).getElementsByTagName("td")[0].innerHTML;
             $http.get(serverUrl + "Points/showPoint/" + name)
                 .then(function(response){
-                    $scope.inCtrl.openDialog(response.data[0])
+                    $scope.$parent.openDialog(response.data[0])
                 }, function(response){})
         }
 
@@ -145,7 +144,7 @@ angular.module('citiesApp')
             var name = document.getElementById(index).getElementsByTagName("td")[0].innerHTML
             $http.get(serverUrl + "Points/showPoint/" + name)
                 .then(function(response){
-                    $scope.inCtrl.openReviewDialog(response.data[0])
+                    $scope.$parent.openReviewDialog(response.data[0])
                 }, function(response){})
         }
 

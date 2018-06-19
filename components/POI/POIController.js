@@ -69,10 +69,10 @@ angular.module('citiesApp')
         self.customFullscreen = false;
 
        self.openDialog = function(point){
-           $scope.inCtrl.openDialog(point)
+           $scope.$parent.openDialog(point)
        }
        self.openReviewDialog = function(point){
-        $scope.inCtrl.openReviewDialog(point)
+        $scope.$parent.openReviewDialog(point)
     }
         self.getPointOfInterest = function () {
             $http.get(serverUrl + "Points/getAllPoints/")
@@ -85,7 +85,7 @@ angular.module('citiesApp')
         self.getPointOfInterest();
 
         self.getFavorites = function () {
-            if($scope.inCtrl.isLogin){
+            if(localStorageModel.getLocalStorage("isLogin")){
             $http.get(serverUrl + "reg/Favorites/showFavoritePoints/")
                 .then(function (response) {
                     self.favorites = response.data;
@@ -96,7 +96,7 @@ angular.module('citiesApp')
             }
         }
 
-        self.getFavorites();
+        
 
         self.isFavorite = function (row) {
             for (var i = 0; i < self.favorites.length; i++) {
@@ -205,6 +205,9 @@ angular.module('citiesApp')
             //.classList.add('fa', self.isFavorite( {'pointName': point.pointName}));
         }
 
+        $(document).ready(function(){
+            self.getFavorites();
+        })
 
     }]);
 

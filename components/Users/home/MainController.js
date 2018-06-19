@@ -1,10 +1,9 @@
 angular.module('citiesApp')
-    app.controller('MainController',['$http','$scope', 'localStorageService','setHeadersToken', function ($http,$scope, localStorageService,setHeadersToken) {
+    app.controller('MainController',['$http','$scope', 'localStorageModel','setHeadersToken', function ($http,$scope, localStorageModel,setHeadersToken) {
 
 
         self = this;
 
-        self.userName= "guest";
 
         self.rec1;
         self.rec2;
@@ -28,7 +27,7 @@ angular.module('citiesApp')
         self.getRec();
 
         self.openDialog = function(point){
-            $scope.inCtrl.openDialog(point)
+            $scope.$parent.openDialog(point)
         }
         self.getSaved = function(){
             $http.get(serverUrl + "reg/Favorites/lastSavedPoints")

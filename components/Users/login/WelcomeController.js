@@ -23,8 +23,8 @@ angular.module('citiesApp')
             if(username.length>0 && password.length>0){
                 $http.post(serverUrl + "Users/login", self.user)
                 .then(function(response){
-                    $scope.isLogin = true;
-                    $scope.userName = username;
+                    $scope.$parent.isLogin = true;
+                    $scope.$parent.userName = username;
 
 
                     localStorageModel.addLocalStorage("token", response.data.token)
@@ -43,11 +43,11 @@ angular.module('citiesApp')
             localStorageModel.removeLocalStorage("removeFavorites");
         }
         self.openDialog = function(point){
-            $scope.inCtrl.openDialog(point)
+            $scope.$parent.openDialog(point)
         }
         self.showRecover = function(){
            // $scope.inCtrl.isRecoverMode = !$scope.inCtrl.isRecoverMode;
-           $scope.inCtrl.recoverPassword();
+           $scope.$parent.recoverPassword();
         }
         self.recoverPassword = function(){
 
