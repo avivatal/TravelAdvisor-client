@@ -6,6 +6,7 @@
 </head>
     <body> -->
 
+
             <div ng-if="fvCtrl.hasFavorites"> 
 
             <h1>My Favorites</h1>
@@ -34,11 +35,11 @@
                 <tr id="{{$index}}" ng-repeat="point in fvCtrl.points | orderBy: fvCtrl.getSort() | filter: fvCtrl.filter">
                     <td>{{point.pointName}}</td>
                     <td>
-                         <img src={{point.picture}} alt="" style="width:30%"> 
+                         <img ng-src={{point.picture}} alt="" style="width:30%"> 
                         </td>
                     <td>{{point.category}}</td>
                     <td>
-                        <i ng-if="$index !== 0" style="cursor: pointer;" ng-click="fvCtrl.swapUp($index)" class="fa fa-sort-asc"></i>
+                        <i ng-if="$index !== 0" style="cursor: pointer;" ng-click="fvCtrl.swapUp($index)" class='fa fa-sort-asc'></i>
                         <i ng-if="$index !== fvCtrl.points.length-1" style="cursor: pointer;" ng-click="fvCtrl.swapDown($index)" class="fa fa-sort-desc"></i>
 
                     </td>

@@ -93,8 +93,7 @@ angular.module('citiesApp')
         
       }
       $(document).ready(function(){
-
-        self.showSavedSlides(self.slideSaved);
+            self.showSavedSlides(self.slideSaved);
         self.showSlides(self.slideIndex);
       });
     }]);
